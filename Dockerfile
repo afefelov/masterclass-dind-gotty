@@ -1,7 +1,7 @@
 FROM docker:18.09.1-dind
 
 ## add some useful tools
-RUN apk update && apk add bash htop vim iftop iotop iperf net-tools iputils postgresql-client git tmux ansible openssh-keygen openssh
+RUN apk update && apk add bash htop vim iftop iotop iperf net-tools iputils postgresql-client git tmux ansible openssh-keygen openssh tzdata
 
 RUN pip3 install docker-compose
 ## build gotty
