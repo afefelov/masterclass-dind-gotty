@@ -1,7 +1,7 @@
 FROM docker:18.09.1-dind
 
 ## add some useful tools
-RUN apk update && apk add bash htop vim iftop iotop iperf net-tools iputils postgresql-client git tmux ansible openssh-keygen openssh tzdata
+RUN apk update && apk add bash htop vim iftop iotop iperf net-tools iputils postgresql-client git tmux ansible openssh-keygen openssh tzdata py-pip
 
 RUN pip3 install docker-compose
 ## build gotty
@@ -39,9 +39,10 @@ RUN set -ex && \
     #--- remove build dependencies --- \
     apk del glibc-bin glibc-i18n && \
     rm -rf /tmp/* /var/cache/apk/*
+RUN echo $'[defaults] \n\
+    host_key_checking = False' > /root/.ansible.cfg
 
 EXPOSE 8080
-
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
